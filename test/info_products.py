@@ -6,9 +6,6 @@ import requests
 import json
 
 
-token = ''
-tenant_id = ''
-
 def main(argv):
     parser = argparse.ArgumentParser(description='Info about products and templates')
 
@@ -24,11 +21,11 @@ def main(argv):
 
     print args
 
-    find_token_and_services(url_base=args.url_base, tenant_id=args.tenantid, user=args.username, password=args.password,
+    find_info_by_region(url_base=args.url_base, tenant_id=args.tenantid, user=args.username, password=args.password,
         region=args.region)
 
 
-def find_token_and_services(url_base, tenant_id, user, password, region):
+def find_info_by_region(url_base, tenant_id, user, password, region):
     url = 'http://' + url_base + '/v2.0/tokens'
     headers = {'Accept': 'application/json'}
     payload = {'auth': {'tenantName': '' + tenant_id + '',
@@ -44,20 +41,21 @@ def find_token_and_services(url_base, tenant_id, user, password, region):
         if i['name'] == 'paasmanager':
             for j in i['endpoints']:
                 if j['region'] == region:
-                    find_all_environments(j['publicURL'], j['region'])
+                    find_all_environments(j['publicURL'], j['region'], token=token, tenant_id=tenant_id)
         if i['name'] == 'sdc':
             for j in i['endpoints']:
                 if j['region'] == region:
-                    find_all_products(j['publicURL'], j['region'])
+                    find_all_products(j['publicURL'], j['region'], token=token, tenant_id=tenant_id)
 
 
 def send(headers, url):
     response = requests.get(url, headers=headers)
+    print response
     response_json = response.json()
     print json.dumps(response_json, sort_keys=True, indent=4, separators=(',', ': '))
 
 
-def find_all_environments(url_base, region):
+def find_all_environments(url_base, region, token, tenant_id):
     # request for abstract environments
     print "find all environments in " + region + '->' + url_base
     url = url_base + '/catalog/org/FIWARE/environment'
@@ -68,7 +66,7 @@ def find_all_environments(url_base, region):
     send(headers, url)
 
 
-def find_all_products(url_base, region):
+def find_all_products(url_base, region, token, tenant_id):
     print "find all products in " + region + '->' + url_base
 
     url = url_base + '/catalog/product'
