@@ -413,10 +413,10 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <doCheck>true</doCheck>
-                            <doUpdate>true</doUpdate>
-                            <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
-                            <useLastCommittedRevision>true</useLastCommittedRevision>
+                            <doCheck>false</doCheck>
+                            <doUpdate>false</doUpdate>
+                            <shortRevisionLength>7</shortRevisionLength>
+
                         </configuration>
                     </plugin>
 
@@ -441,7 +441,8 @@
 
                             <!-- Basics -->
                             <name>fiware-paas</name>
-                            <version>${project.version}-$\{buildNumber}</version>
+                            <!-- <release>$\{project.version}-$\{buildNumber}</release> -->
+                            <release>${buildNumber}</release>
 
                             <copyright>copyright 2014</copyright>
                             <packager>fiware</packager>
