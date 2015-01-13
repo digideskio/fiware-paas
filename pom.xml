@@ -400,6 +400,28 @@
             <id>rpm</id>
             <build>
                 <plugins>
+
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <version>1.7</version>
+                        <executions>
+                            <execution>
+                                <id>version-helper</id>
+                                <goals>
+                                    <goal>regex-property</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <name>is.snapshot</name>
+                            <value>${project.version}</value>
+                            <regex>.*(-SNAPSHOT)$</regex>
+                            <replacement>_alpha</replacement>
+                            <failIfNoMatch>false</failIfNoMatch>
+                        </configuration>
+                    </plugin>
+
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>buildnumber-maven-plugin</artifactId>
@@ -416,6 +438,12 @@
                             <doCheck>false</doCheck>
                             <doUpdate>false</doUpdate>
                             <shortRevisionLength>7</shortRevisionLength>
+
+                            <format>{0}{1}</format>
+                            <items>
+                                <item>scmVersion</item>
+                                <item>${is.snapshot}</item>
+                            </items>
 
                         </configuration>
                     </plugin>
