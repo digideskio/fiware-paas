@@ -96,9 +96,9 @@
 
 
     <scm>
-        <connection>scm:git:${scmURI}/${repoName}.git</connection>
-        <developerConnection>scm:git:${scmURI}/${repoName}.git</developerConnection>
-        <url>${scmURI}/${repoName}.git</url>
+        <connection>scm:git:${scmURI}/fiware-paas.git</connection>
+        <developerConnection>scm:git:${scmURI}/fiware-paas.git</developerConnection>
+        <url>${scmURI}/fiware-paas.git</url>
         <tag>HEAD</tag>
     </scm>
 
@@ -415,6 +415,8 @@
                         <configuration>
                             <doCheck>true</doCheck>
                             <doUpdate>true</doUpdate>
+                            <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
+                            <useLastCommittedRevision>true</useLastCommittedRevision>
                         </configuration>
                     </plugin>
 
